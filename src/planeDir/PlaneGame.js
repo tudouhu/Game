@@ -147,7 +147,7 @@ class PlaneGame extends createjs.Container{
   }
   //接受服务器的goDie数据 退出
   socketDie = (data)=>{
-    console.log(data.name);
+    //console.log(data.name);
     this.removeChild(this.enemyP[data.name]);
     delete this.enemyP[data.name];
     this.hitText(data.name+'退出了游戏');
@@ -155,7 +155,7 @@ class PlaneGame extends createjs.Container{
   }
   //接受服务器的goLive数据 加入
   socketLive = (data)=>{
-    console.log('接收加入数据：',data);
+    //console.log('接收加入数据：',data);
     if(data.name!=null){
       this.psd.Name=this.HeroPlane.Name;
       this.psd.x=this.HeroPlane.x;
