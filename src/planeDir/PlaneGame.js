@@ -14,7 +14,6 @@ import GameData from '../manager/GameData';
 import PSData from '../manager/PSData';
 import PlaneControl from './PlaneControl';
 import DataShow from './DataShow';
-import DataTransmit from './DataTransmit';
 
 /**
  * 飞机大战游戏主类
@@ -56,6 +55,12 @@ class PlaneGame extends createjs.Container{
     this.planeControl=new PlaneControl();
     this.addChild(this.planeControl);
     GameData.planeControl=this.planeControl;
+    /**
+     * FPS ping显示
+     * @type {DataShow}
+     */
+    this.dataShow=new DataShow();
+    GameData.dataShow=this.dataShow;
     //添加键盘事件
     document.addEventListener('keydown',this.onKeyDown);
     document.addEventListener('keyup',this.onKeyUp);
@@ -106,9 +111,10 @@ class PlaneGame extends createjs.Container{
    * @param e
    */
   onFrame=(e)=>{
-    this.planeControl.onFrame();
-    DataTransmit.getInstance().onFrame();
-    DataShow.getInstance().onFrame();
+
+    this.planeControl.onFrame(e);
+    this.dataShow.onFrame(e);
+
 
     this.planeScroll(this.planeControl.HeroPlane);
   }

@@ -25,16 +25,6 @@ class EnemyPlane extends BasePlane{
      */
     this.attackNum=0;
     /**
-     * 移动x加值
-     * @type {number}
-     */
-    this.mx=0;
-    /**
-     * 移动y加值
-     * @type {number}
-     */
-    this.my=0;
-    /**
      * 目标x
      * @type {number}
      */
@@ -44,11 +34,6 @@ class EnemyPlane extends BasePlane{
      * @type {number}
      */
     this.targetY=0;
-    /**
-     * 移动次数
-     * @type {number}
-     */
-    this.moveNum=-1;
     /**
      * 当前最大时间
      * @type {number}
@@ -68,6 +53,7 @@ class EnemyPlane extends BasePlane{
 
     this.targetX = obj.x;
     this.targetY = obj.y;
+
     //let dx = obj.x - this.x;
     //let dy = obj.y - this.y;
     //let dis = Math.sqrt(dx * dx + dy * dy);
@@ -82,7 +68,8 @@ class EnemyPlane extends BasePlane{
     //  this.y = obj.y;
     //}
 
-    //为了防止本地角度360 服务器传来为0，导致计算出现问题，每次计算角度
+
+
     this.targetRot = obj.rot
     if (Math.abs(this.targetRot - this.rotation) > 30)
       this.rotation = obj.rot;
@@ -117,6 +104,7 @@ class EnemyPlane extends BasePlane{
         this.rotation=this.targetRot;
     }
     //移动
+
     // this.rotation=this.targetRot;
 
     //if(this.moveNum>=0){
@@ -144,6 +132,7 @@ class EnemyPlane extends BasePlane{
 
     //this.x=this.targetX;
     //this.y=this.targetY;
+
 
   }
 

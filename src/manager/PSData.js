@@ -60,32 +60,6 @@ class PSData{
   }
 
   /**
-   * 获得将PSData解析字符串最少的obj
-   * @param psdata psdata数据
-   * @returns {{}}
-   */
-  static getObj=(psdata)=>{
-    let obj={};
-    // for(let str in psdata){
-    //   if(str == 'attack'&&psdata.attack==1) obj[PSData.hashMap['attack']]=Math.round(psdata.attack);
-    //   else if(str == 'hitObj'&&JSON.stringify(psdata.hitObj).length>2) obj[PSData.hashMap['hitObj']]=psdata.hitObj;
-    //   else obj[PSData.hashMap[str]]=typeof psdata[str] == 'number'?parseInt(psdata[str]):psdata[str];
-    //
-    // }
-    obj[PSData.hashMap['Name']]=psdata.Name;
-    obj[PSData.hashMap['KPI']]=psdata.KPI;
-    obj[PSData.hashMap['x']]=Math.round(psdata.x);
-    obj[PSData.hashMap['y']]=Math.round(psdata.y);
-    obj[PSData.hashMap['rot']]=Math.round(psdata.rot);
-    obj[PSData.hashMap['time']]=psdata.time;
-    if(psdata.attack==1)
-     obj[PSData.hashMap['attack']]=Math.round(psdata.attack);
-    if(JSON.stringify(psdata.hitObj).length>2)
-     obj[PSData.hashMap['hitObj']]=psdata.hitObj;
-    return obj;
-  }
-
-  /**
    *  obj       需要转换的数据
    * @param sd  是否为往服务器发送的数据
   */
@@ -120,17 +94,42 @@ class PSData{
    * 将一个obj转换成PSData
    * @param obj
    */
-  static shiftObj(obj){
-    let pd=new PSData();
-    for(let s in obj){
-      pd[PSData.ObjIndex[s]]=obj[s];
+  static shiftObj(obj) {
+    let pd = new PSData();
+    for (let s in obj) {
+      pd[PSData.ObjIndex[s]] = obj[s];
+
+      if (psdata.Name != null) {
+
+        obj[PSData.PSDataIndex['Name']] = psdata.Name;
+        obj[PSData.PSDataIndex['KPI']] = psdata.KPI;
+        obj[PSData.PSDataIndex['x']] = Math.round(psdata.x);
+        obj[PSData.PSDataIndex['y']] = Math.round(psdata.y);
+        obj[PSData.PSDataIndex['rot']] = Math.round(psdata.rot);
+        obj[PSData.PSDataIndex['time']] = psdata.time;
+        if (psdata.attack == 1)
+          obj[PSData.PSDataIndex['attack']] = Math.round(psdata.attack);
+        if (JSON.stringify(psdata.hitObj).length > 2)
+          obj[PSData.PSDataIndex['hitObj']] = psdata.hitObj;
+        return obj;
+
+      }
+      else {
+        obj = psdata;
+        let pd = new PSData();
+        for (let s in obj) {
+          pd[PSData.ObjIndex[s]] = obj[s];
+        }
+        return pd;
+      }
+
     }
-    return pd;
+
+
   }
 
-
-
 }
+
 /**
  *上传数据索引  obj.上传数据属性名=PSData属性名
  * @type {{}}
@@ -141,5 +140,6 @@ PSData.ObjIndex=null;
  * @type {{}}
  */
 PSData.hashMap={Name:'n',KPI:'KPI',x:'x',y:'y',rot:'r',time:'t',attack:'a',hitObj:'h'};
+PSData.PSDataIndex={Name:'n',KPI:'KPI',x:'x',y:'y',rot:'r',time:'t',attack:'a',hitObj:'h'};
 
 export default PSData;
