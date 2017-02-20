@@ -68,19 +68,19 @@ class EnemyPlane extends BasePlane{
 
     this.targetX = obj.x;
     this.targetY = obj.y;
-    let dx = obj.x - this.x;
-    let dy = obj.y - this.y;
-    let dis = Math.sqrt(dx * dx + dy * dy);
-    if (dis > 3 && dis <= 30) {
-      let angle = Math.atan2(dy, dx);
-      this.moveNum = Math.floor(dis / this.speed);
-      this.mx = Math.cos(angle) * this.speed;
-      this.my = Math.sin(angle) * this.speed;
-    }
-    else{
-      this.x = obj.x;
-      this.y = obj.y;
-    }
+    //let dx = obj.x - this.x;
+    //let dy = obj.y - this.y;
+    //let dis = Math.sqrt(dx * dx + dy * dy);
+    //if (dis > 3 && dis <= 30) {
+    //  let angle = Math.atan2(dy, dx);
+    //  this.moveNum = Math.floor(dis / this.speed);
+    //  this.mx = Math.cos(angle) * this.speed;
+    //  this.my = Math.sin(angle) * this.speed;
+    //}
+    //else{
+    //  this.x = obj.x;
+    //  this.y = obj.y;
+    //}
 
     //为了防止本地角度360 服务器传来为0，导致计算出现问题，每次计算角度
     this.targetRot = obj.rot
@@ -93,7 +93,7 @@ class EnemyPlane extends BasePlane{
    * @param e
    */
   onFrame=(e)=>{
-    //window.console.log(1,this.Name,this.x,this.y);
+
 
     this.frameHitB=false;
     if(this.bulletArr.length==0)
@@ -104,7 +104,7 @@ class EnemyPlane extends BasePlane{
       this.attack();
     }
     this.moveBullet();
-    //window.console.log(2,this.Name,this.x,this.y);
+
     //旋转  本地和服务器角度大于旋转速度按旋转速度旋转，小于直接赋值
     if(this.rotation!=this.targetRot){
       if(Math.abs(this.targetRot-this.rotation)>this.rotationSpeed){
@@ -118,31 +118,33 @@ class EnemyPlane extends BasePlane{
     }
     //移动
     // this.rotation=this.targetRot;
+
     //if(this.moveNum>=0){
-    //  //window.console.log(4,this.Name,this.x,this.y);
-    //  this.moveNum--;
-    //  this.move(this.mx, this.my);
     //  if(this.moveNum==0){
     //    this.x=this.targetX;
     //    this.y=this.targetY;
     //  }
-    //
+    //  else
+    //    this.move(this.mx, this.my);
+    //  this.moveNum--;
     //}
     //else {
-    //  //window.console.log(5,this.Name,this.x,this.y);
     //  let angle=Tools.getHD(this.rotation);
     //  let vx=Math.cos(angle)*this.speed;
     //  let vy=Math.sin(angle)*this.speed;
-    //  //window.console.log(angle,vx,vy,this.rotation);
     //  this.move(vx,vy);
     //}
 
-    this.x=this.targetX;
-    this.y=this.targetY;
 
 
-    //window.console.log(3,this.Name,this.x,this.y);
-    // console.log('子弹',this.bulletArr.length);
+
+
+    this.x += (this.targetX - this.x)　* 0.92;
+    this.y += (this.targetY - this.y)　* 0.92;
+
+    //this.x=this.targetX;
+    //this.y=this.targetY;
+
   }
 
 
